@@ -31,7 +31,7 @@ async function logout() {
           </NuxtLink>
           <template v-if="loggedIn">
             <NuxtLink to="/profile" class="font-semibold text-white">
-              {{ user?.displayName }}
+              {{ user?.displayName }} 
             </NuxtLink>
             <button
               type="button"

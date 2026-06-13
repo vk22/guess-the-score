@@ -64,7 +64,7 @@ function failuresCount(failures: unknown) {
         @click="() => refresh()"
       >
         Обновить лог
-      </button>
+      </button> 
     </div>
 
     <p
