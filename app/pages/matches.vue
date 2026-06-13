@@ -156,6 +156,27 @@ function initials(name: string) {
     .slice(0, 2)
     .toUpperCase();
 }
+
+function projectedPoints(
+  prediction: { homeScore: number; awayScore: number },
+  result: { homeScore: number | null; awayScore: number | null },
+) {
+  if (result.homeScore === null || result.awayScore === null) {
+    return 0;
+  }
+
+  if (
+    prediction.homeScore === result.homeScore
+    && prediction.awayScore === result.awayScore
+  ) {
+    return 3;
+  }
+
+  const predictedOutcome = Math.sign(prediction.homeScore - prediction.awayScore);
+  const actualOutcome = Math.sign(result.homeScore - result.awayScore);
+
+  return predictedOutcome === actualOutcome ? 1 : 0;
+}
 </script>
 
 <template>
@@ -312,6 +333,61 @@ function initials(name: string) {
               </NuxtLink>
 
               <div
+                v-else-if="match.status === 'LIVE'"
+                class="w-full shrink-0 rounded-xl border border-amber-300/20 bg-amber-300/10 px-4 py-4 lg:w-72"
+              >
+                <div class="flex items-center justify-between gap-4">
+                  <span class="text-sm font-semibold uppercase tracking-wider text-amber-200">
+                    Live
+                  </span>
+                  <strong class="text-xl">
+                    {{ match.homeScore }} : {{ match.awayScore }}
+                  </strong>
+                </div>
+
+                <div
+                  v-if="loggedIn && match.prediction"
+                  class="mt-3 flex items-center justify-between gap-4 border-t border-amber-200/20 pt-3"
+                >
+                  <div>
+                    <p class="text-sm text-slate-300">Ваш прогноз</p>
+                    <strong class="text-lg">
+                      {{ match.prediction.homeScore }} : {{ match.prediction.awayScore }}
+                    </strong>
+                  </div>
+                  <span
+                    class="rounded-full px-3 py-1 text-sm font-bold"
+                    :class="{
+                      'bg-emerald-400/15 text-emerald-300': projectedPoints(
+                        { homeScore: match.prediction.homeScore, awayScore: match.prediction.awayScore },
+                        { homeScore: match.homeScore, awayScore: match.awayScore },
+                      ) === 3,
+                      'bg-amber-300/15 text-amber-200': projectedPoints(
+                        { homeScore: match.prediction.homeScore, awayScore: match.prediction.awayScore },
+                        { homeScore: match.homeScore, awayScore: match.awayScore },
+                      ) === 1,
+                      'bg-slate-700 text-slate-300': projectedPoints(
+                        { homeScore: match.prediction.homeScore, awayScore: match.prediction.awayScore },
+                        { homeScore: match.homeScore, awayScore: match.awayScore },
+                      ) === 0,
+                    }"
+                  >
+                    Если сейчас конец: +{{ pointsLabel(projectedPoints(
+                      { homeScore: match.prediction.homeScore, awayScore: match.prediction.awayScore },
+                      { homeScore: match.homeScore, awayScore: match.awayScore },
+                    )) }}
+                  </span>
+                </div>
+
+                <p
+                  v-else-if="loggedIn"
+                  class="mt-3 border-t border-amber-200/20 pt-3 text-sm text-slate-300"
+                >
+                  Прогноз не сделан
+                </p>
+              </div>
+
+              <div
                 v-else-if="match.status === 'FINISHED'"
                 class="w-full shrink-0 rounded-xl py-4 px-2 lg:w-32"
               >
@@ -414,6 +490,21 @@ function initials(name: string) {
                       }"
                     >
                       +{{ pointsLabel(participant.points) }}
+                    </p>
+                    <p
+                      v-else-if="match.status === 'LIVE'"
+                      class="text-xs font-semibold text-amber-200"
+                    >
+                      Если сейчас конец: +{{ pointsLabel(projectedPoints(
+                        {
+                          homeScore: participant.homeScore,
+                          awayScore: participant.awayScore,
+                        },
+                        {
+                          homeScore: match.homeScore,
+                          awayScore: match.awayScore,
+                        },
+                      )) }}
                     </p>
                     <p v-else class="text-xs text-slate-500">
                       Ожидает результата
