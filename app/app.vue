@@ -43,13 +43,15 @@ async function logout() {
             </button>
           </template>
           <template v-else>
-            <NuxtLink to="/login">Войти</NuxtLink>
-            <NuxtLink
+            <NuxtLink 
+            class="rounded-lg bg-emerald-400 px-4 py-2 font-bold text-slate-950"
+            to="/login">Войти</NuxtLink>
+            <!-- <NuxtLink
               to="/register"
-              class="rounded-lg bg-emerald-400 px-4 py-2 font-bold text-slate-950"
+              
             >
               Регистрация
-            </NuxtLink>
+            </NuxtLink> -->
           </template>
         </nav>
       </div>
