@@ -2,9 +2,9 @@ import { loginSchema } from '#shared/schemas/auth'
 
 export default defineEventHandler(async (event) => {
   const input = await parseRequestBody(event, loginSchema)
-  const user = await prisma.user.findUnique({
+  const user = await prisma.user.findFirst({
     where: {
-      email: input.email,
+      displayName: input.username,
     },
     select: {
       id: true,
@@ -19,7 +19,7 @@ export default defineEventHandler(async (event) => {
     throw createError({
       statusCode: 401,
       statusMessage: 'Unauthorized',
-      message: 'Неверный email или пароль',
+      message: 'Неверный username или пароль',
     })
   }
 

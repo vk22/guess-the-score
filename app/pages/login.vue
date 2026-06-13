@@ -8,7 +8,7 @@ useSeoMeta({ title: 'Вход — Guess the Score' })
 const route = useRoute()
 const { fetch: fetchSession } = useUserSession()
 const form = reactive<LoginInput>({
-  email: '',
+  username: '',
   password: '',
 })
 const errorMessage = ref('')
@@ -61,12 +61,12 @@ async function submit() {
       <AuthFormError v-if="errorMessage" :message="errorMessage" />
 
       <label class="block">
-        <span class="mb-2 block text-sm font-medium text-slate-300">Email</span>
+        <span class="mb-2 block text-sm font-medium text-slate-300">Username</span>
         <input
-          v-model="form.email"
-          name="email"
-          type="email"
-          autocomplete="email"
+          v-model="form.username"
+          name="username"
+          type="text"
+          autocomplete="username"
           required
           class="w-full rounded-xl border border-white/15 bg-white/5 px-4 py-3 outline-none transition focus:border-emerald-400"
         >

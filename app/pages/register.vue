@@ -7,8 +7,8 @@ useSeoMeta({ title: 'Регистрация — Guess the Score' })
 
 const { fetch: fetchSession } = useUserSession()
 const form = reactive<RegisterInput>({
-  displayName: '',
   email: '',
+  username: '',
   password: '',
 })
 const errorMessage = ref('')
@@ -56,11 +56,11 @@ async function submit() {
       <AuthFormError v-if="errorMessage" :message="errorMessage" />
 
       <label class="block">
-        <span class="mb-2 block text-sm font-medium text-slate-300">Имя</span>
+        <span class="mb-2 block text-sm font-medium text-slate-300">Username</span>
         <input
-          v-model="form.displayName"
-          name="displayName"
-          autocomplete="name"
+          v-model="form.username"
+          name="username"
+          autocomplete="username"
           required
           minlength="2"
           maxlength="40"

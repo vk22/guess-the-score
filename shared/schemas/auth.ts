@@ -7,6 +7,13 @@ const email = z
   .max(254, 'Email слишком длинный')
   .transform(value => value.toLowerCase())
 
+const username = z
+  .string()
+  .trim()
+  .min(2, 'Username должен содержать минимум 2 символа')
+  .max(40, 'Username должен содержать не более 40 символов')
+  .transform(value => value.toLowerCase())
+
 const password = z
   .string()
   .min(8, 'Пароль должен содержать минимум 8 символов')
@@ -14,16 +21,12 @@ const password = z
 
 export const registerSchema = z.object({
   email,
-  displayName: z
-    .string()
-    .trim()
-    .min(2, 'Имя должно содержать минимум 2 символа')
-    .max(40, 'Имя должно содержать не более 40 символов'),
+  username,
   password,
 })
 
 export const loginSchema = z.object({
-  email,
+  username,
   password,
 })
 

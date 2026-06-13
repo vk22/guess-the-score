@@ -21,6 +21,7 @@ model User {
   predictions  Prediction[]
 
   @@index([totalPoints])
+  @@unique([displayName])
 }
 
 model Competition {

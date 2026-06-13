@@ -9,7 +9,7 @@ export default defineEventHandler(async (event) => {
     const user = await prisma.user.create({
       data: {
         email: input.email,
-        displayName: input.displayName,
+        displayName: input.username,
         passwordHash,
       },
       select: {
@@ -33,10 +33,16 @@ export default defineEventHandler(async (event) => {
       error instanceof Prisma.PrismaClientKnownRequestError
       && error.code === 'P2002'
     ) {
+      const target = Array.isArray(error.meta?.target)
+        ? error.meta.target
+        : []
+
       throw createError({
         statusCode: 409,
         statusMessage: 'Conflict',
-        message: 'Пользователь с таким email уже зарегистрирован',
+        message: target.includes('displayName')
+          ? 'Пользователь с таким username уже зарегистрирован'
+          : 'Пользователь с таким email уже зарегистрирован',
       })
     }
 
