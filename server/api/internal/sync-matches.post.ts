@@ -1,5 +1,5 @@
 import { timingSafeEqual } from 'node:crypto'
-import { runConfiguredSync } from '../../services/run-configured-sync'
+import { executeSyncRun } from '../../services/execute-sync-run'
 
 export default defineEventHandler(async (event) => {
   const config = useRuntimeConfig(event)
@@ -15,13 +15,16 @@ export default defineEventHandler(async (event) => {
     })
   }
 
-  return runConfiguredSync({
-    footballDataApiKey: String(config.footballDataApiKey),
-    footballDataBaseUrl: String(config.footballDataBaseUrl),
-    footballDataCompetition: String(config.footballDataCompetition),
-    footballDataStartDate: String(config.footballDataStartDate),
-    footballSyncFutureDays: Number(config.footballSyncFutureDays),
-  })
+  const result = await executeSyncRun({ source: 'github-actions' })
+
+  if (result.skipped) {
+    throw createError({
+      statusCode: 409,
+      statusMessage: 'Sync already running',
+    })
+  }
+
+  return result.summary
 })
 
 function safeEqual(actual: string | undefined, expected: string) {
