@@ -80,9 +80,9 @@ function initials(name: string) {
           </span>
           <div>
             <p class="font-bold">{{ participant.displayName }}</p>
-            <p v-if="participant.id === user?.id" class="text-xs text-emerald-400">
+            <!-- <p v-if="participant.id === user?.id" class="text-xs text-emerald-400">
               Это вы
-            </p>
+            </p> -->
           </div>
         </div>
 
