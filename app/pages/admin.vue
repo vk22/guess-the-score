@@ -46,7 +46,7 @@ function failuresCount(failures: unknown) {
     </p>
     <h1 class="mt-3 text-4xl font-black">Обновление результатов</h1>
     <p class="mt-3 max-w-2xl text-slate-400">
-      Ручной запуск синхронизации календаря и результатов FIFA World Cup 2026.
+      Ручной запуск синхронизации календаря и результатов FIFA World Cup 2026. 
     </p>
 
     <div class="mt-8 flex flex-wrap items-center gap-4">
