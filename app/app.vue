@@ -27,7 +27,7 @@ async function logout() {
           <NuxtLink to="/matches">Матчи</NuxtLink>
           <NuxtLink to="/leaderboard">Рейтинг</NuxtLink>
           <NuxtLink v-if="loggedIn && user?.isAdmin" to="/admin">
-            Админка
+            Админка 
           </NuxtLink>
           <template v-if="loggedIn">
             <NuxtLink to="/profile" class="font-semibold text-white">
