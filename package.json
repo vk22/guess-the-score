@@ -1,0 +1,40 @@
+{
+  "name": "football-predictions",
+  "type": "module",
+  "private": true,
+  "engines": {
+    "node": "^20.19.0 || >=22.12.0"
+  },
+  "scripts": {
+    "build": "nuxt build",
+    "db:down": "docker compose down",
+    "db:logs": "docker compose logs -f postgres",
+    "db:up": "docker compose up -d postgres",
+    "dev": "nuxt dev --host 0.0.0.0",
+    "generate": "nuxt generate",
+    "prisma:generate": "prisma generate",
+    "prisma:migrate": "prisma migrate dev",
+    "prisma:studio": "prisma studio",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare && prisma generate",
+    "sync:matches": "curl --fail-with-body -X POST -H \"x-sync-secret: $NUXT_SYNC_SECRET\" \"${NUXT_APP_URL:-http://127.0.0.1:3000}/api/internal/sync-matches\"",
+    "test": "vitest run",
+    "typecheck": "nuxt typecheck"
+  },
+  "dependencies": {
+    "@nuxtjs/tailwindcss": "^6.14.0",
+    "@prisma/client": "6.19.3",
+    "nuxt": "3.21.8",
+    "nuxt-auth-utils": "^0.5.29",
+    "vue": "^3.5.35",
+    "vue-router": "^5.1.0",
+    "zod": "^4.4.3"
+  },
+  "devDependencies": {
+    "@types/node": "^25.9.3",
+    "prisma": "6.19.3",
+    "typescript": "^6.0.3",
+    "vitest": "^4.1.8",
+    "vue-tsc": "^3.3.5"
+  }
+}
