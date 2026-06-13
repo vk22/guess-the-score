@@ -372,7 +372,7 @@ function projectedPoints(
                       ) === 0,
                     }"
                   >
-                    Если сейчас конец: +{{ pointsLabel(projectedPoints(
+                    +{{ pointsLabel(projectedPoints(
                       { homeScore: match.prediction.homeScore, awayScore: match.prediction.awayScore },
                       { homeScore: match.homeScore, awayScore: match.awayScore },
                     )) }}
