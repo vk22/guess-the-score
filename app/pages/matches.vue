@@ -148,6 +148,10 @@ function pointsLabel(points: number) {
   return `${points} очков`;
 }
 
+function scoreLabel(score: number | null) {
+  return score === null ? "—" : String(score);
+}
+
 function initials(name: string) {
   return name
     .split(/\s+/)
@@ -341,9 +345,16 @@ function projectedPoints(
                     Live
                   </span>
                   <strong class="text-xl">
-                    {{ match.homeScore }} : {{ match.awayScore }}
+                    {{ scoreLabel(match.homeScore) }} : {{ scoreLabel(match.awayScore) }}
                   </strong>
                 </div>
+
+                <p
+                  v-if="match.homeScore === null || match.awayScore === null"
+                  class="mt-2 text-xs text-amber-100/80"
+                >
+                  Счёт live от провайдера не поступает
+                </p>
 
                 <div
                   v-if="loggedIn && match.prediction"
@@ -394,7 +405,7 @@ function projectedPoints(
                 <div class="flex items-center justify-end gap-4">
                   <!-- <span class="text-sm text-slate-400">Результат</span> -->
                   <strong class="text-xl">
-                    {{ match.homeScore }} : {{ match.awayScore }}
+                    {{ scoreLabel(match.homeScore) }} : {{ scoreLabel(match.awayScore) }}
                   </strong>
                 </div>
 
@@ -495,7 +506,7 @@ function projectedPoints(
                       v-else-if="match.status === 'LIVE'"
                       class="text-xs font-semibold text-amber-200"
                     >
-                      Если сейчас конец: +{{ pointsLabel(projectedPoints(
+                     +{{ pointsLabel(projectedPoints(
                         {
                           homeScore: participant.homeScore,
                           awayScore: participant.awayScore,

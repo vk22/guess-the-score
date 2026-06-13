@@ -1,6 +1,7 @@
 import type { FootballDataMatch } from '../integrations/football-data/schema'
 import { fetchFootballDataMatches } from '../integrations/football-data/client'
 import {
+  getFootballDataLiveScore,
   getFootballDataResult,
   mapFootballDataStatus,
 } from '../integrations/football-data/mapper'
@@ -108,7 +109,9 @@ export function createDateWindows(from: string, to: string) {
 
 async function upsertFootballDataMatch(providerMatch: AssignedFootballDataMatch) {
   const status = mapFootballDataStatus(providerMatch.status)
-  const result = getFootballDataResult(providerMatch)
+  const result = status === 'FINISHED'
+    ? getFootballDataResult(providerMatch)
+    : getFootballDataLiveScore(providerMatch)
   const syncedAt = new Date()
   const season = Number(providerMatch.season.startDate.slice(0, 4))
 

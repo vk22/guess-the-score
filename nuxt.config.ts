@@ -10,9 +10,6 @@ export default defineNuxtConfig({
     'nuxt-auth-utils',
   ],
   runtimeConfig: {
-    footballApiKey: '',
-    footballApiBaseUrl: 'https://v3.football.api-sports.io',
-    footballLeagues: '1:2026,2:2025,39:2025,78:2025,135:2025,140:2025',
     footballDataApiKey: '',
     footballDataBaseUrl: 'https://api.football-data.org/v4',
     footballDataCompetition: 'WC',

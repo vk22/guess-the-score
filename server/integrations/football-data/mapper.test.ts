@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import {
+  getFootballDataLiveScore,
   getFootballDataResult,
   mapFootballDataStatus,
 } from './mapper'
@@ -23,6 +24,15 @@ describe('football-data.org mapper', () => {
     })
 
     expect(getFootballDataResult(match)).toEqual({ home: 1, away: 1 })
+  })
+
+  it('reads live score from provider fields when present', () => {
+    const match = createMatch({
+      duration: 'REGULAR',
+      fullTime: { home: 2, away: 1 },
+    })
+
+    expect(getFootballDataLiveScore(match)).toEqual({ home: 2, away: 1 })
   })
 })
 

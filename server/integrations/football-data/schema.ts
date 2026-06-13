@@ -38,8 +38,8 @@ export const footballDataResponseSchema = z.object({
       fullTime: scoreSchema,
       regularTime: scoreSchema.optional(),
       penalties: scoreSchema.optional(),
-    }),
-  })),
+    }).passthrough(),
+  }).passthrough()),
 })
 
 export type FootballDataMatch = z.infer<

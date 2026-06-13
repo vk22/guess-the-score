@@ -51,7 +51,7 @@ NUXT_FOOTBALL_DATA_COMPETITION="WC"
 NUXT_FOOTBALL_DATA_START_DATE="2026-06-11"
 ```
 
-`NUXT_FOOTBALL_API_KEY` остается fallback для платного API-Football.
+Для синхронизации матчей сейчас используется только `NUXT_FOOTBALL_DATA_API_KEY`.
 Синхронизация football-data.org ограничена турниром `WC` (FIFA World Cup).
 Каждый запуск повторно загружает матчи от даты открытия турнира, поэтому
 результаты уже сыгранных матчей не выпадают из последующих обновлений.

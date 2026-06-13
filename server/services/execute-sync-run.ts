@@ -23,9 +23,6 @@ export async function executeSyncRun(input: ExecuteSyncRunInput) {
 
   try {
     const summary = await runConfiguredSync({
-      footballApiKey: String(config.footballApiKey),
-      footballApiBaseUrl: String(config.footballApiBaseUrl),
-      footballLeagues: String(config.footballLeagues),
       footballDataApiKey: String(config.footballDataApiKey),
       footballDataBaseUrl: String(config.footballDataBaseUrl),
       footballDataCompetition: String(config.footballDataCompetition),
@@ -59,9 +56,9 @@ function normalizeSyncSummary(
     competition: 'competition' in summary ? summary.competition : null,
     from: summary.from,
     to: summary.to,
-    requests: 'requests' in summary ? summary.requests : summary.leagues,
+    requests: summary.requests,
     synced: summary.synced,
-    skipped: 'skipped' in summary ? summary.skipped : 0,
+    skipped: summary.skipped,
     scored: summary.scored,
     failures: summary.failures,
   }

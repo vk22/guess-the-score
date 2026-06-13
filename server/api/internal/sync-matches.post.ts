@@ -16,9 +16,6 @@ export default defineEventHandler(async (event) => {
   }
 
   return runConfiguredSync({
-    footballApiKey: String(config.footballApiKey),
-    footballApiBaseUrl: String(config.footballApiBaseUrl),
-    footballLeagues: String(config.footballLeagues),
     footballDataApiKey: String(config.footballDataApiKey),
     footballDataBaseUrl: String(config.footballDataBaseUrl),
     footballDataCompetition: String(config.footballDataCompetition),

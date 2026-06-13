@@ -56,3 +56,19 @@ export function getFootballDataResult(match: FootballDataMatch) {
     away: fullTime.away,
   }
 }
+
+export function getFootballDataLiveScore(match: FootballDataMatch) {
+  if (mapFootballDataStatus(match.status) !== 'LIVE') {
+    return null
+  }
+
+  const { fullTime } = match.score
+  if (fullTime.home !== null && fullTime.away !== null) {
+    return {
+      home: fullTime.home,
+      away: fullTime.away,
+    }
+  }
+
+  return null
+}
