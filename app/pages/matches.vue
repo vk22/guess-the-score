@@ -400,16 +400,18 @@ function projectedPoints(
 
               <div
                 v-else-if="match.status === 'FINISHED'"
-                class="w-full shrink-0 rounded-xl py-4 px-2 lg:w-32"
+                class="w-full shrink-0 rounded-xl border border-white/10 bg-slate-950/30 px-4 py-4 lg:w-80"
               >
-                <div class="flex items-center justify-end gap-4">
-                  <!-- <span class="text-sm text-slate-400">Результат</span> -->
+                <div class="flex items-center justify-between gap-4">
+                  <span class="text-sm font-semibold uppercase tracking-wider text-slate-400">
+                    Результат
+                  </span>
                   <strong class="text-xl">
                     {{ scoreLabel(match.homeScore) }} : {{ scoreLabel(match.awayScore) }}
                   </strong>
                 </div>
 
-                <!-- <div
+                <div
                   v-if="loggedIn && match.prediction"
                   class="mt-3 flex items-center justify-between gap-4 border-t border-white/10 pt-3"
                 >
@@ -431,12 +433,48 @@ function projectedPoints(
                   </span>
                 </div>
 
+                <form
+                  v-else-if="loggedIn && user?.isAdmin"
+                  class="mt-3 border-t border-white/10 pt-3"
+                  @submit.prevent="savePrediction(match.id)"
+                >
+                  <p class="text-sm text-slate-400">
+                    Добавить прогноз задним числом
+                  </p>
+                  <div class="mt-3 flex items-center gap-2">
+                    <input
+                      v-model.number="predictions[match.id]!.homeScore"
+                      type="number"
+                      min="0"
+                      max="99"
+                      class="w-20 rounded-lg border border-white/10 bg-slate-900 px-3 py-2 text-center text-lg outline-none focus:border-emerald-400"
+                      placeholder="0"
+                    />
+                    <span class="text-lg text-slate-400">:</span>
+                    <input
+                      v-model.number="predictions[match.id]!.awayScore"
+                      type="number"
+                      min="0"
+                      max="99"
+                      class="w-20 rounded-lg border border-white/10 bg-slate-900 px-3 py-2 text-center text-lg outline-none focus:border-emerald-400"
+                      placeholder="0"
+                    />
+                    <button
+                      type="submit"
+                      :disabled="savingId === match.id"
+                      class="ml-2 rounded-lg bg-emerald-400 px-4 py-2 text-sm font-bold text-slate-950 disabled:opacity-60"
+                    >
+                      Добавить
+                    </button>
+                  </div>
+                </form>
+
                 <p
                   v-else-if="loggedIn"
                   class="mt-3 border-t border-white/10 pt-3 text-sm text-slate-500"
                 >
                   Прогноз не сделан
-                </p> -->
+                </p>
               </div>
               <p v-else class="shrink-0 text-sm text-slate-400">
                 {{ match.status }}
