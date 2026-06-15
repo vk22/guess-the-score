@@ -1,6 +1,6 @@
 import { executeSyncRun } from '../services/execute-sync-run'
 
-const TEN_MINUTES = 10 * 60 * 1000
+const INTERVAL = 5 * 60 * 1000
 
 export default defineNitroPlugin(() => {
   if (
@@ -17,6 +17,6 @@ export default defineNitroPlugin(() => {
     })
   }
 
-  const timer = setInterval(run, TEN_MINUTES)
+  const timer = setInterval(run, INTERVAL)
   timer.unref?.()
 })
