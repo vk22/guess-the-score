@@ -50,7 +50,7 @@ cat football.dump | docker exec -i football-predictions-postgres-1 pg_restore --
 Open:
 
 ```text
-http://YOUR_VPS_IP:3000
+http://YOUR_VPS_IP:4200
 ```
 
 ## 6. Cron

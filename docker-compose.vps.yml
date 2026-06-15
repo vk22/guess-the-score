@@ -26,9 +26,9 @@ services:
       - .env
     environment:
       DATABASE_URL: postgresql://football_user:football_password_change_me@postgres:5432/football_predictions?schema=public
-      NUXT_APP_URL: http://127.0.0.1:3000
+      NUXT_APP_URL: http://127.0.0.1:4200
     ports:
-      - "3000:3000"
+      - "4200:3000"
 
 volumes:
   postgres_data:
