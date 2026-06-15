@@ -1,0 +1,34 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: football_predictions
+      POSTGRES_USER: football_user
+      POSTGRES_PASSWORD: football_password_change_me
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U football_user -d football_predictions"]
+      interval: 5s
+      timeout: 5s
+      retries: 15
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+    env_file:
+      - .env
+    environment:
+      DATABASE_URL: postgresql://football_user:football_password_change_me@postgres:5432/football_predictions?schema=public
+      NUXT_APP_URL: http://127.0.0.1:3000
+    ports:
+      - "3000:3000"
+
+volumes:
+  postgres_data:

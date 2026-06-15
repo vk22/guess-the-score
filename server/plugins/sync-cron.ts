@@ -3,7 +3,11 @@ import { executeSyncRun } from '../services/execute-sync-run'
 const TEN_MINUTES = 10 * 60 * 1000
 
 export default defineNitroPlugin(() => {
-  if (process.env.NODE_ENV === 'test' || process.env.VERCEL) {
+  if (
+    process.env.NODE_ENV === 'test'
+    || process.env.VERCEL
+    || process.env.NUXT_DISABLE_SYNC_CRON === 'true'
+  ) {
     return
   }
 

@@ -1,0 +1,8 @@
+node_modules
+.nuxt
+.output
+.git
+.DS_Store
+football.dump
+football2.dump
+coverage

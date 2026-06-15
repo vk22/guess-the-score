@@ -13,10 +13,12 @@
     "dev": "nuxt dev --host 0.0.0.0",
     "generate": "nuxt generate",
     "prisma:generate": "prisma generate",
+    "prisma:deploy": "prisma migrate deploy",
     "prisma:migrate": "prisma migrate dev",
     "prisma:studio": "prisma studio",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare && prisma generate",
+    "start": "node .output/server/index.mjs",
     "sync:matches": "curl --fail-with-body -X POST -H \"x-sync-secret: $NUXT_SYNC_SECRET\" \"${NUXT_APP_URL:-http://127.0.0.1:3000}/api/internal/sync-matches\"",
     "test": "vitest run",
     "typecheck": "nuxt typecheck"
