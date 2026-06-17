@@ -3,43 +3,20 @@ useSeoMeta({
   title: 'Guess the Score — футбольные прогнозы',
   description: 'Прогнозируйте Guess the Score матчей и соревнуйтесь с друзьями.',
 })
-
-const backgroundImages = [
-  '/background1.jpeg',
-  '/background2.jpeg',
-  '/background3.jpeg',
-  '/background4.jpeg',
-  '/background5.jpeg',
-]
-
-const activeBackground = ref(0)
-let backgroundTimer: ReturnType<typeof setInterval> | undefined
-
-onMounted(() => {
-  backgroundTimer = setInterval(() => {
-    activeBackground.value = (activeBackground.value + 1) % backgroundImages.length
-  }, 5000)
-})
-
-onBeforeUnmount(() => {
-  if (backgroundTimer) {
-    clearInterval(backgroundTimer)
-  }
-})
 </script>
 
 <template>
   <section class="home-page min-h-[calc(100vh-73px)]">
     <div class="home-page__overlay">
-      <div class="home-page__backgrounds" aria-hidden="true">
-        <div
-          v-for="(image, index) in backgroundImages"
-          :key="image"
-          class="home-page__background"
-          :class="{ 'home-page__background--active': index === activeBackground }"
-          :style="{ backgroundImage: `url(${image})` }"
-        />
-      </div>
+      <video
+        class="home-page__video"
+        src="/video.mp4"
+        aria-hidden="true"
+        autoplay
+        muted
+        loop
+        playsinline
+      />
 
       <div class="home-page__shade" aria-hidden="true" />
 
@@ -109,24 +86,13 @@ onBeforeUnmount(() => {
   min-height: inherit;
 }
 
-.home-page__backgrounds {
+.home-page__video {
   position: absolute;
   inset: 0;
-}
-
-.home-page__background {
-  position: absolute;
-  inset: 0;
-  background-position: center top;
-  background-repeat: no-repeat;
-  background-size: cover;
-  opacity: 0;
-  transition: opacity 1200ms ease;
-  transform: scale(1.02);
-}
-
-.home-page__background--active {
-  opacity: 1;
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  object-position: center top;
 }
 
 .home-page__shade {
