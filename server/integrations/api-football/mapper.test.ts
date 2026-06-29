@@ -33,4 +33,25 @@ describe('API-Football mapper', () => {
 
     expect(getPredictionResult(fixture)).toEqual({ home: 1, away: 1 })
   })
+
+  it('does not fall back to final goals for extra-time matches', () => {
+    const fixture = {
+      fixture: {
+        id: 1,
+        date: '2026-06-13T18:00:00+00:00',
+        status: { short: 'AET' },
+      },
+      league: { id: 1, name: 'World Cup', season: 2026 },
+      teams: {
+        home: { id: 1, name: 'Home' },
+        away: { id: 2, name: 'Away' },
+      },
+      goals: { home: 2, away: 1 },
+      score: {
+        fulltime: { home: null, away: null },
+      },
+    } satisfies ApiFootballFixture
+
+    expect(getPredictionResult(fixture)).toBeNull()
+  })
 })

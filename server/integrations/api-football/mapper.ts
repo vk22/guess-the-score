@@ -31,8 +31,9 @@ export function getPredictionResult(fixture: ApiFootballFixture) {
     return null
   }
 
-  const home = fixture.score.fulltime.home ?? fixture.goals.home
-  const away = fixture.score.fulltime.away ?? fixture.goals.away
+  const { short } = fixture.fixture.status
+  const home = fixture.score.fulltime.home ?? (short === 'FT' ? fixture.goals.home : null)
+  const away = fixture.score.fulltime.away ?? (short === 'FT' ? fixture.goals.away : null)
 
   if (home === null || away === null) {
     return null

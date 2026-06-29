@@ -16,27 +16,52 @@ describe('football-data.org mapper', () => {
     expect(mapFootballDataStatus(providerStatus)).toBe(status)
   })
 
-  it('removes penalty shootout goals from the prediction result', () => {
+  it('uses regular-time score for penalty shootout matches', () => {
     const match = createMatch({
       duration: 'PENALTY_SHOOTOUT',
       fullTime: { home: 6, away: 5 },
+      regularTime: { home: 1, away: 1 },
       penalties: { home: 5, away: 4 },
     })
 
     expect(getFootballDataResult(match)).toEqual({ home: 1, away: 1 })
   })
 
-  it('reads live score from provider fields when present', () => {
+  it('does not use extra-time score when regular-time score is missing', () => {
+    const match = createMatch({
+      duration: 'EXTRA_TIME',
+      fullTime: { home: 2, away: 1 },
+    })
+
+    expect(getFootballDataResult(match)).toBeNull()
+  })
+
+  it('falls back to full-time score for regular finished matches', () => {
     const match = createMatch({
       duration: 'REGULAR',
       fullTime: { home: 2, away: 1 },
     })
 
+    expect(getFootballDataResult(match)).toEqual({ home: 2, away: 1 })
+  })
+
+  it('reads live score from provider fields when present', () => {
+    const match = createMatch(
+      {
+        duration: 'REGULAR',
+        fullTime: { home: 2, away: 1 },
+      },
+      { status: 'IN_PLAY' },
+    )
+
     expect(getFootballDataLiveScore(match)).toEqual({ home: 2, away: 1 })
   })
 })
 
-function createMatch(score: FootballDataMatch['score']): FootballDataMatch {
+function createMatch(
+  score: FootballDataMatch['score'],
+  overrides: Partial<FootballDataMatch> = {},
+): FootballDataMatch {
   return {
     id: 1,
     utcDate: '2026-06-13T18:00:00Z',
@@ -47,5 +72,6 @@ function createMatch(score: FootballDataMatch['score']): FootballDataMatch {
     homeTeam: { id: 1, name: 'Home' },
     awayTeam: { id: 2, name: 'Away' },
     score,
+    ...overrides,
   }
 }

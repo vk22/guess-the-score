@@ -34,21 +34,13 @@ export function getFootballDataResult(match: FootballDataMatch) {
     }
   }
 
-  const { fullTime, penalties } = match.score
+  const { fullTime } = match.score
   if (fullTime.home === null || fullTime.away === null) {
     return null
   }
 
-  if (
-    match.score.duration === 'PENALTY_SHOOTOUT'
-    && penalties
-    && penalties.home !== null
-    && penalties.away !== null
-  ) {
-    return {
-      home: fullTime.home - penalties.home,
-      away: fullTime.away - penalties.away,
-    }
+  if (match.score.duration !== 'REGULAR') {
+    return null
   }
 
   return {
